@@ -18,7 +18,7 @@ export default function EmergencyDetails() {
       id: "police",
       name: "Police Emergency",
       category: "Law Enforcement",
-      phone: "100 / 112",
+      phone: "112",
       location: "Central Police Station",
       address: "Main Street, City Center - 0.8 km away",
       distance: "0.8 km",
@@ -30,7 +30,7 @@ export default function EmergencyDetails() {
       id: "fire",
       name: "Fire Emergency",
       category: "Fire Department",
-      phone: "101 / 112",
+      phone: "101",
       location: "Fire Station",
       address: "Emergency Lane, Downtown - 1.2 km away",
       distance: "1.2 km",
@@ -49,6 +49,66 @@ export default function EmergencyDetails() {
       available: true,
       icon: "medical",
       color: "red"
+    },
+    cm: {
+      id: "cm",
+      name: "CM Helpline",
+      category: "Chief Minister Office",
+      phone: "1076",
+      location: "CM Office",
+      address: "Available 24x7",
+      distance: "24x7",
+      available: true,
+      icon: "disaster",
+      color: "orange"
+    },
+    women: {
+      id: "women",
+      name: "Women Help",
+      category: "Women Safety",
+      phone: "1090",
+      location: "Women Helpline",
+      address: "Available 24x7",
+      distance: "24x7",
+      available: true,
+      icon: "women",
+      color: "pink"
+    },
+    child: {
+      id: "child",
+      name: "Child Help",
+      category: "Child Protection",
+      phone: "1098",
+      location: "Child Helpline",
+      address: "Available 24x7",
+      distance: "24x7",
+      available: true,
+      icon: "child",
+      color: "purple"
+    },
+    nic: {
+      id: "nic",
+      name: "NIC Helpline",
+      category: "Technical Support",
+      phone: "1800 111 555",
+      location: "NIC Support Center",
+      address: "Available 24x7",
+      distance: "24x7",
+      available: true,
+      icon: "elderly",
+      color: "indigo"
+    },
+    railway: {
+      id: "railway",
+      name: "Railway",
+      category: "Railway Security",
+      phone: "182",
+      location: "Railway Security",
+      address: "Central Railway Station - 1.8 km away",
+      distance: "1.8 km",
+      available: true,
+      icon: "railway",
+      color: "green"
     }
   };
 
