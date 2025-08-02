@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(210, 40%, 13%);
+  --muted: hsl(210, 40%, 96%);
+  --muted-foreground: hsl(215, 13%, 47%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(210, 40%, 13%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(210, 40%, 13%);
+  --border: hsl(214, 32%, 91%);
+  --input: hsl(214, 32%, 91%);
+  --primary: hsl(210, 77%, 44%);
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(210, 40%, 96%);
+  --secondary-foreground: hsl(215, 25%, 27%);
+  --accent: hsl(210, 40%, 96%);
+  --accent-foreground: hsl(215, 25%, 27%);
+  --destructive: hsl(16, 84%, 54%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(210, 77%, 44%);
+  --radius: 0.5rem;
+  
+  /* Ocean Breeze Theme Colors */
+  --ocean-blue: hsl(210, 77%, 44%);
+  --sea-green: hsl(174, 100%, 21%);
+  --light-aqua: hsl(195, 91%, 64%);
+  --emergency-red: hsl(16, 84%, 54%);
+  --gradient-start: hsl(210, 100%, 97%);
+  --gradient-end: hsl(120, 38%, 95%);
+}
+
+.dark {
+  --background: hsl(224, 71%, 4%);
+  --foreground: hsl(213, 31%, 91%);
+  --muted: hsl(223, 47%, 11%);
+  --muted-foreground: hsl(215, 14%, 64%);
+  --popover: hsl(224, 71%, 4%);
+  --popover-foreground: hsl(213, 31%, 91%);
+  --card: hsl(224, 71%, 4%);
+  --card-foreground: hsl(213, 31%, 91%);
+  --border: hsl(216, 34%, 17%);
+  --input: hsl(216, 34%, 17%);
+  --primary: hsl(210, 77%, 44%);
+  --primary-foreground: hsl(222, 84%, 5%);
+  --secondary: hsl(222, 47%, 11%);
+  --secondary-foreground: hsl(213, 31%, 91%);
+  --accent: hsl(216, 34%, 17%);
+  --accent-foreground: hsl(213, 31%, 91%);
+  --destructive: hsl(16, 84%, 54%);
+  --destructive-foreground: hsl(213, 31%, 91%);
+  --ring: hsl(216, 34%, 17%);
+  
+  /* Dark mode ocean theme */
+  --ocean-blue: hsl(210, 77%, 44%);
+  --sea-green: hsl(174, 100%, 21%);
+  --light-aqua: hsl(195, 91%, 64%);
+  --emergency-red: hsl(16, 84%, 54%);
+  --gradient-start: hsl(224, 71%, 4%);
+  --gradient-end: hsl(224, 71%, 8%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .gradient-bg {
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+  }
+  
+  .ocean-blue {
+    color: var(--ocean-blue);
+  }
+  
+  .bg-ocean-blue {
+    background-color: var(--ocean-blue);
+  }
+  
+  .sea-green {
+    color: var(--sea-green);
+  }
+  
+  .bg-sea-green {
+    background-color: var(--sea-green);
+  }
+  
+  .light-aqua {
+    color: var(--light-aqua);
+  }
+  
+  .bg-light-aqua {
+    background-color: var(--light-aqua);
+  }
+  
+  .emergency-red {
+    color: var(--emergency-red);
+  }
+  
+  .bg-emergency-red {
+    background-color: var(--emergency-red);
+  }
+  
+  .emergency-pulse {
+    animation: emergency-pulse 2s infinite;
+  }
+  
+  @keyframes emergency-pulse {
+    0%, 100% { 
+      transform: scale(1); 
+      opacity: 1;
+    }
+    50% { 
+      transform: scale(1.05); 
+      opacity: 0.9;
+    }
+  }
+  
+  .slide-in {
+    animation: slide-in 0.3s ease-out;
+  }
+  
+  @keyframes slide-in {
+    from { 
+      transform: translateX(100%); 
+      opacity: 0; 
+    }
+    to { 
+      transform: translateX(0); 
+      opacity: 1; 
+    }
+  }
+  
+  .fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+  
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
