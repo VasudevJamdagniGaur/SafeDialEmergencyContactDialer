@@ -4,13 +4,16 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, Phone, MapPin, Clock, ExternalLink, Share, Edit2, Save, X } from "lucide-react";
 import { useLocation, useSearch } from "wouter";
 import { EmergencyService } from "@/types/emergency";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function EmergencyDetails() {
   const [, setLocation] = useLocation();
   const search = useSearch();
   const [isEditing, setIsEditing] = useState(false);
   const [editedService, setEditedService] = useState<EmergencyService | null>(null);
+  const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const locationInputRef = useRef<HTMLInputElement>(null);
   
   // Parse service ID from URL
   const urlParams = new URLSearchParams(search);
@@ -137,12 +140,54 @@ export default function EmergencyDetails() {
     setEditedService(null);
   };
 
+  // Mock location search function - in production, use Google Places API or similar
+  const searchLocations = async (query: string) => {
+    if (query.length < 3) {
+      setLocationSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+
+    // Mock suggestions - replace with actual API call
+    const mockSuggestions = [
+      `${query} Police Station`,
+      `${query} Fire Station`,
+      `${query} Hospital`,
+      `${query} Medical Center`,
+      `${query} Emergency Services`,
+      `Central ${query}`,
+      `${query} District Office`,
+      `${query} City Center`
+    ].filter(suggestion => 
+      suggestion.toLowerCase().includes(query.toLowerCase())
+    ).slice(0, 5);
+
+    setLocationSuggestions(mockSuggestions);
+    setShowSuggestions(true);
+  };
+
   const handleInputChange = (field: keyof EmergencyService, value: string) => {
     if (editedService) {
       setEditedService({
         ...editedService,
         [field]: value
       });
+
+      // Trigger location suggestions for location field
+      if (field === 'location') {
+        searchLocations(value);
+      }
+    }
+  };
+
+  const selectLocationSuggestion = (suggestion: string) => {
+    if (editedService) {
+      setEditedService({
+        ...editedService,
+        location: suggestion
+      });
+      setShowSuggestions(false);
+      setLocationSuggestions([]);
     }
   };
 
@@ -183,7 +228,9 @@ export default function EmergencyDetails() {
 
   const openInMaps = () => {
     const query = encodeURIComponent(currentService.location);
-    window.open(`https://maps.google.com/?q=${query}`, '_blank');
+    // Try to open in Google Maps app first, then fallback to web
+    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
+    window.open(googleMapsUrl, '_blank');
   };
 
   const shareLocation = () => {
@@ -195,6 +242,20 @@ export default function EmergencyDetails() {
       });
     }
   };
+
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (locationInputRef.current && !locationInputRef.current.contains(event.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -298,15 +359,43 @@ export default function EmergencyDetails() {
               
               <div className="flex items-center space-x-3">
                 <MapPin className="w-5 h-5 text-gray-500" />
-                <div className="flex-1">
+                <div className="flex-1 relative">
                   {isEditing ? (
                     <div className="space-y-1">
-                      <Input
-                        value={editedService?.location || ''}
-                        onChange={(e) => handleInputChange('location', e.target.value)}
-                        className="font-semibold"
-                        placeholder="Location Name"
-                      />
+                      <div className="relative">
+                        <Input
+                          ref={locationInputRef}
+                          value={editedService?.location || ''}
+                          onChange={(e) => handleInputChange('location', e.target.value)}
+                          className="font-semibold"
+                          placeholder="Location Name"
+                          onFocus={() => {
+                            if (editedService?.location && editedService.location.length >= 3) {
+                              searchLocations(editedService.location);
+                            }
+                          }}
+                          onBlur={() => {
+                            // Delay hiding suggestions to allow click
+                            setTimeout(() => setShowSuggestions(false), 200);
+                          }}
+                        />
+                        {showSuggestions && locationSuggestions.length > 0 && (
+                          <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md shadow-lg z-10 max-h-48 overflow-y-auto">
+                            {locationSuggestions.map((suggestion, index) => (
+                              <button
+                                key={index}
+                                onClick={() => selectLocationSuggestion(suggestion)}
+                                className="w-full text-left px-3 py-2 hover:bg-gray-100 border-b border-gray-100 last:border-b-0"
+                              >
+                                <div className="flex items-center space-x-2">
+                                  <MapPin className="w-4 h-4 text-gray-400" />
+                                  <span className="text-sm">{suggestion}</span>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                       <Input
                         value={editedService?.address || ''}
                         onChange={(e) => handleInputChange('address', e.target.value)}
@@ -315,9 +404,13 @@ export default function EmergencyDetails() {
                       />
                     </div>
                   ) : (
-                    <div>
-                      <p className="font-semibold">{currentService.location}</p>
+                    <div 
+                      className="cursor-pointer hover:bg-gray-50 p-2 rounded-md transition-colors"
+                      onClick={openInMaps}
+                    >
+                      <p className="font-semibold text-blue-600 hover:text-blue-800">{currentService.location}</p>
                       <p className="text-sm text-gray-600">{currentService.address}</p>
+                      <p className="text-xs text-blue-500 mt-1">Click to open in maps</p>
                     </div>
                   )}
                 </div>
