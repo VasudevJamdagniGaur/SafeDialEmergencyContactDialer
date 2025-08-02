@@ -11,10 +11,10 @@ import {
   Bell, 
   Info, 
   Phone, 
+  MessageCircle, 
   MapPin, 
   AlertTriangle 
 } from "lucide-react";
-import { Header } from "@/components/header"; // Import Header
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -125,6 +125,7 @@ export default function Home() {
     { icon: Bell, label: "Notifications", action: () => {} },
     { icon: Info, label: "About Us", action: () => setLocation("/about") },
     { icon: Phone, label: "Dial 112", action: () => window.location.href = 'tel:112' },
+    { icon: MessageCircle, label: "Chat Us", action: () => {} },
     { icon: MapPin, label: "TrackMe", action: () => setLocation("/trackme") },
     { icon: AlertTriangle, label: "Emergency", action: () => setLocation("/sos-map") }
   ];
@@ -136,7 +137,21 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white pb-20">
       {/* App Bar */}
-      <Header title="SafeDial"/>
+      <div className="bg-ocean-blue text-white p-4 flex items-center justify-between">
+        <h1 className="text-xl font-semibold">SafeDial</h1>
+        <div className="flex items-center space-x-2 text-sm">
+          <span>Volunteer Status:</span>
+          <div className="flex items-center space-x-2">
+            <span className="text-xs">Offline</span>
+            <Switch 
+              checked={volunteerOnline}
+              onCheckedChange={setVolunteerOnline}
+              className="data-[state=checked]:bg-sea-green"
+            />
+            <span className="text-xs">Online</span>
+          </div>
+        </div>
+      </div>
 
       <div className="p-4 space-y-6">
         {/* Quick Actions Grid */}
