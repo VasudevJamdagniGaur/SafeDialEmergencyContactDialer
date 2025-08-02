@@ -23,7 +23,7 @@
   --destructive-foreground: hsl(0, 0%, 98%);
   --ring: hsl(210, 77%, 44%);
   --radius: 0.5rem;
-  
+
   /* Ocean Breeze Theme Colors */
   --ocean-blue: hsl(210, 77%, 44%);
   --sea-green: hsl(174, 100%, 21%);
@@ -53,7 +53,7 @@
   --destructive: hsl(16, 84%, 54%);
   --destructive-foreground: hsl(213, 31%, 91%);
   --ring: hsl(216, 34%, 17%);
-  
+
   /* Dark mode ocean theme */
   --ocean-blue: hsl(210, 77%, 44%);
   --sea-green: hsl(174, 100%, 21%);
@@ -79,75 +79,103 @@
   .gradient-bg {
     background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
   }
-  
+
   .ocean-blue {
     color: var(--ocean-blue);
   }
-  
+
   .bg-ocean-blue {
     background-color: var(--ocean-blue);
   }
-  
+
   .sea-green {
     color: var(--sea-green);
   }
-  
+
   .bg-sea-green {
     background-color: var(--sea-green);
   }
-  
+
   .light-aqua {
     color: var(--light-aqua);
   }
-  
+
   .bg-light-aqua {
     background-color: var(--light-aqua);
   }
-  
+
   .emergency-red {
     color: var(--emergency-red);
   }
-  
+
   .bg-emergency-red {
     background-color: var(--emergency-red);
   }
-  
+
   .emergency-pulse {
     animation: emergency-pulse 2s infinite;
   }
-  
+
   @keyframes emergency-pulse {
-    0%, 100% { 
-      transform: scale(1); 
+    0%, 100% {
+      transform: scale(1);
       opacity: 1;
     }
-    50% { 
-      transform: scale(1.05); 
+    50% {
+      transform: scale(1.05);
       opacity: 0.9;
     }
   }
-  
+
   .slide-in {
     animation: slide-in 0.3s ease-out;
   }
-  
+
   @keyframes slide-in {
-    from { 
-      transform: translateX(100%); 
-      opacity: 0; 
+    from {
+      transform: translateX(100%);
+      opacity: 0;
     }
-    to { 
-      transform: translateX(0); 
-      opacity: 1; 
+    to {
+      transform: translateX(0);
+      opacity: 1;
     }
   }
-  
+
   .fade-in {
     animation: fade-in 0.3s ease-out;
   }
-  
+
   @keyframes fade-in {
     from { opacity: 0; }
     to { opacity: 1; }
+  }
+}
+
+.emergency-pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
