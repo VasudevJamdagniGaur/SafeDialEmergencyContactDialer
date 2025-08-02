@@ -1,0 +1,135 @@
+1. Splash / Welcome Screen
+	•	Display the SafeDial logo with a vibrant red background.
+	•	Message: “Welcome to SafeDial — Your lifeline in emergencies.”
+	•	Two buttons:
+	•	🔴 Emergency Call (should dial 112)
+	•	👤 Login (navigates to the login screen)
+	•	Small footer: “Powered by SafeDial Team”
+
+⸻
+
+2. Login / Sign-Up Screen
+	•	Input Fields:
+	•	Mobile Number (+91 prefilled)
+	•	Dropdown to Select State
+	•	Button: Generate OTP
+	•	Show agreement message with clickable links to Terms of Use and Privacy Policy
+
+⸻
+
+3. Home Dashboard
+	•	App Bar title: SafeDial
+	•	Volunteer Status toggle (Online/Offline)
+	•	Functional grid icons:
+	•	👤 Profile
+	•	📜 SOS History
+	•	🔔 Notification
+	•	ℹ️ About Us
+	•	📞 Dial 112
+	•	💬 Chat Us
+	•	📍 TrackMe
+	•	🆘 Emergency
+	•	Below that, display Emergency Services as large buttons or cards:
+	•	🚓 Police
+	•	🔥 Fire
+	•	🏥 Medical
+	•	🌊 Disaster
+	•	👩 Woman
+	•	👧 Child
+	•	👴 Elderly
+	•	🚆 Railway
+	•	Each should show:
+	•	Name
+	•	Emergency number
+	•	Closest location (via GPS)
+
+⸻
+
+4. Emergency Details Screen
+	•	On tapping a service, show:
+	•	Name of service
+	•	Phone number
+	•	Address/location
+	•	Button to Call Now or Open in Maps
+
+⸻
+
+5. SOS Map Screen
+	•	Display Google Map with live user location
+	•	Section below map includes:
+	•	SOS Message (optional)
+	•	SOS Status (ID, status like “SOS Pressed”)
+	•	Button: “I Am Safe”
+	•	Button: “More Details”
+
+⸻
+
+6. Update Profile Page
+	•	Fields:
+	•	Full Name
+	•	Phone Number
+	•	Gender (Dropdown)
+	•	Date of Birth (Date Picker)
+	•	State
+	•	About Me
+	•	Checkbox: “Special Need”
+	•	Button: Update Account
+
+⸻
+
+7. TrackMe Page
+	•	Description of real-time tracking feature
+	•	Optional alternate number input
+	•	MPIN Enable toggle
+	•	Button: Get Start
+	•	Key Features:
+	•	Scheduled Tracking
+	•	Go Live
+	•	MPIN Verification
+
+⸻
+
+8. About Us / FAQ Page
+	•	Expandable sections (accordion style) for:
+	•	How to Register?
+	•	How to Add Emergency Contacts?
+	•	How to Complete KYC?
+	•	How to Raise Emergency SOS?
+	•	How to Update Profile?
+
+⸻
+
+🎨 UI/UX Theme Requirements
+
+Apply these design rules for a clean, modern, and responsive look:
+
+🎨 Color Palette
+	•	Primary: Red #D32F2F
+	•	Accent: Orange #FF6F00 or Blue #1976D2
+	•	Background: Light gradient (white to blush red)
+	•	Text: Dark Gray #212121
+
+✍️ Typography
+	•	Use Google Fonts: Roboto, Poppins, or Montserrat
+	•	Headings: bold, large size
+	•	Body text: medium size, high contrast
+
+🧩 Buttons & Inputs
+	•	Use Material Design 3 or Jetpack Compose’s MaterialTheme
+	•	Rounded corners (16dp+)
+	•	Icons from Material Icons
+	•	Ripple effects and smooth transitions
+
+🌙 Dark Mode Support
+	•	Background: #121212
+	•	Text: #FFFFFF
+	•	Emergency buttons retain bright red
+
+🗺️ Map Styling
+	•	Custom styled map (light/dark)
+	•	Emergency pins with icons (police, hospital, fire, etc.)
+
+✨ Animations
+	•	Fade/slide screen transitions
+	•	Button click animations
+	•	Pulse/glow for SOS buttons
