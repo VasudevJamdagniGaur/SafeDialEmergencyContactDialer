@@ -1,12 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Phone, MapPin, Clock, ExternalLink, Share } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { ArrowLeft, Phone, MapPin, Clock, ExternalLink, Share, Edit2, Save, X } from "lucide-react";
 import { useLocation, useSearch } from "wouter";
 import { EmergencyService } from "@/types/emergency";
+import { useState } from "react";
 
 export default function EmergencyDetails() {
   const [, setLocation] = useLocation();
   const search = useSearch();
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedService, setEditedService] = useState<EmergencyService | null>(null);
   
   // Parse service ID from URL
   const urlParams = new URLSearchParams(search);
@@ -114,6 +118,36 @@ export default function EmergencyDetails() {
 
   const service = services[serviceId || ''] || services.police;
 
+  const handleEditStart = () => {
+    setEditedService({ ...service });
+    setIsEditing(true);
+  };
+
+  const handleEditSave = () => {
+    if (editedService) {
+      // In a real app, you would save to a database here
+      services[editedService.id] = editedService;
+      setIsEditing(false);
+      setEditedService(null);
+    }
+  };
+
+  const handleEditCancel = () => {
+    setIsEditing(false);
+    setEditedService(null);
+  };
+
+  const handleInputChange = (field: keyof EmergencyService, value: string) => {
+    if (editedService) {
+      setEditedService({
+        ...editedService,
+        [field]: value
+      });
+    }
+  };
+
+  const currentService = isEditing && editedService ? editedService : service;
+
   const getServiceIcon = (iconName: string) => {
     switch (iconName) {
       case 'police':
@@ -141,22 +175,22 @@ export default function EmergencyDetails() {
   };
 
   const handleCall = () => {
-    if (confirm(`This will call ${service.name} (${service.phone}). Continue?`)) {
-      const phoneNumber = service.phone.split(' / ')[0];
+    if (confirm(`This will call ${currentService.name} (${currentService.phone}). Continue?`)) {
+      const phoneNumber = currentService.phone.split(' / ')[0];
       window.location.href = `tel:${phoneNumber}`;
     }
   };
 
   const openInMaps = () => {
-    const query = encodeURIComponent(service.location);
+    const query = encodeURIComponent(currentService.location);
     window.open(`https://maps.google.com/?q=${query}`, '_blank');
   };
 
   const shareLocation = () => {
     if (navigator.share) {
       navigator.share({
-        title: `${service.name} Location`,
-        text: `I'm sharing the location of ${service.name}`,
+        title: `${currentService.name} Location`,
+        text: `I'm sharing the location of ${currentService.name}`,
         url: window.location.href
       });
     }
@@ -173,36 +207,119 @@ export default function EmergencyDetails() {
         >
           <ArrowLeft className="w-5 h-5" />
         </Button>
-        <h2 className="text-xl font-semibold ml-3">{service.name}</h2>
+        <h2 className="text-xl font-semibold ml-3">{currentService.name}</h2>
+        <div className="ml-auto">
+          {!isEditing ? (
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={handleEditStart}
+              className="text-white hover:bg-white/20 p-2"
+            >
+              <Edit2 className="w-5 h-5" />
+            </Button>
+          ) : (
+            <div className="flex space-x-2">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={handleEditSave}
+                className="text-white hover:bg-white/20 p-2"
+              >
+                <Save className="w-5 h-5" />
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={handleEditCancel}
+                className="text-white hover:bg-white/20 p-2"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
       
       <div className="p-6">
         <Card className="shadow-lg mb-6">
           <CardContent className="p-6">
             <div className="flex items-center mb-4">
-              <div className={`w-16 h-16 rounded-full flex items-center justify-center mr-4 ${getIconColor(service.icon)}`}>
-                <span className="text-2xl">{getServiceIcon(service.icon)}</span>
+              <div className={`w-16 h-16 rounded-full flex items-center justify-center mr-4 ${getIconColor(currentService.icon)}`}>
+                <span className="text-2xl">{getServiceIcon(currentService.icon)}</span>
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-800">{service.name}</h3>
-                <p className="text-gray-600">{service.category}</p>
+              <div className="flex-1">
+                {isEditing ? (
+                  <div className="space-y-2">
+                    <Input
+                      value={editedService?.name || ''}
+                      onChange={(e) => handleInputChange('name', e.target.value)}
+                      className="text-xl font-bold"
+                      placeholder="Service Name"
+                    />
+                    <Input
+                      value={editedService?.category || ''}
+                      onChange={(e) => handleInputChange('category', e.target.value)}
+                      className="text-gray-600"
+                      placeholder="Category"
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800">{currentService.name}</h3>
+                    <p className="text-gray-600">{currentService.category}</p>
+                  </div>
+                )}
               </div>
             </div>
             
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-gray-500" />
-                <div>
-                  <p className="font-semibold">{service.phone}</p>
-                  <p className="text-sm text-gray-600">Emergency Hotline</p>
+                <div className="flex-1">
+                  {isEditing ? (
+                    <div className="space-y-1">
+                      <Input
+                        value={editedService?.phone || ''}
+                        onChange={(e) => handleInputChange('phone', e.target.value)}
+                        className="font-semibold"
+                        placeholder="Phone Number"
+                      />
+                      <p className="text-sm text-gray-600">Emergency Hotline</p>
+                    </div>
+                  ) : (
+                    <div>
+                      <p className="font-semibold">{currentService.phone}</p>
+                      <p className="text-sm text-gray-600">Emergency Hotline</p>
+                    </div>
+                  )}
                 </div>
               </div>
               
               <div className="flex items-center space-x-3">
                 <MapPin className="w-5 h-5 text-gray-500" />
-                <div>
-                  <p className="font-semibold">{service.location}</p>
-                  <p className="text-sm text-gray-600">{service.address}</p>
+                <div className="flex-1">
+                  {isEditing ? (
+                    <div className="space-y-1">
+                      <Input
+                        value={editedService?.location || ''}
+                        onChange={(e) => handleInputChange('location', e.target.value)}
+                        className="font-semibold"
+                        placeholder="Location Name"
+                      />
+                      <Input
+                        value={editedService?.address || ''}
+                        onChange={(e) => handleInputChange('address', e.target.value)}
+                        className="text-sm text-gray-600"
+                        placeholder="Full Address"
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <p className="font-semibold">{currentService.location}</p>
+                      <p className="text-sm text-gray-600">{currentService.address}</p>
+                    </div>
+                  )}
                 </div>
               </div>
               
