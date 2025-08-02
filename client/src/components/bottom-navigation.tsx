@@ -13,7 +13,7 @@ export function BottomNavigation() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+    <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 z-50">
       <div className="max-w-md mx-auto">
         <div className="flex items-center justify-around py-2">
           {navItems.map((item) => {
@@ -27,8 +27,8 @@ export function BottomNavigation() {
                   isActive 
                     ? item.label === "SOS" 
                       ? "text-emergency-red" 
-                      : "ocean-blue"
-                    : "text-gray-600"
+                      : "text-ocean-blue"
+                    : "text-gray-600 dark:text-gray-400"
                 )}
               >
                 <item.icon className="w-6 h-6" />
