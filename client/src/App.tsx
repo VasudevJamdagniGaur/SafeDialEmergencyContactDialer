@@ -15,7 +15,7 @@ import About from "@/pages/about";
 
 function Router() {
   return (
-    <div className="max-w-md mx-auto bg-white min-h-screen shadow-xl relative overflow-hidden">
+    <div className="max-w-md mx-auto bg-background min-h-screen shadow-xl relative overflow-hidden">
       <Switch>
         <Route path="/splash" component={Splash} />
         <Route path="/login" component={Login} />

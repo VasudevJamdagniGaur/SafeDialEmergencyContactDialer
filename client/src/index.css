@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 100%);
+  --background: hsl(45, 25%, 92%);
   --foreground: hsl(210, 40%, 13%);
-  --muted: hsl(210, 40%, 96%);
+  --muted: hsl(45, 20%, 88%);
   --muted-foreground: hsl(215, 13%, 47%);
-  --popover: hsl(0, 0%, 100%);
+  --popover: hsl(45, 25%, 92%);
   --popover-foreground: hsl(210, 40%, 13%);
-  --card: hsl(0, 0%, 100%);
+  --card: hsl(45, 25%, 92%);
   --card-foreground: hsl(210, 40%, 13%);
   --border: hsl(214, 32%, 91%);
   --input: hsl(214, 32%, 91%);
@@ -29,8 +29,8 @@
   --sea-green: hsl(174, 100%, 21%);
   --light-aqua: hsl(195, 91%, 64%);
   --emergency-red: hsl(16, 84%, 54%);
-  --gradient-start: hsl(210, 100%, 97%);
-  --gradient-end: hsl(120, 38%, 95%);
+  --gradient-start: hsl(45, 30%, 94%);
+  --gradient-end: hsl(40, 25%, 90%);
 }
 
 .dark {
