@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { ArrowLeft, User, Phone } from "lucide-react";
+import { ArrowLeft, User } from "lucide-react";
 import { useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 
@@ -20,11 +19,7 @@ export default function Signup() {
     state: ""
   });
   
-  const [otp, setOtp] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
-  const [otpVerified, setOtpVerified] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [otpLoading, setOtpLoading] = useState(false);
 
   const states = [
     "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
@@ -35,59 +30,7 @@ export default function Signup() {
     "Uttarakhand", "West Bengal"
   ];
 
-  const handleSendOTP = async () => {
-    if (!formData.phoneNumber || formData.phoneNumber.length !== 10) {
-      toast({
-        title: "Invalid Phone Number",
-        description: "Please enter a valid 10-digit phone number.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setOtpLoading(true);
-    
-    // Simulate OTP sending
-    setTimeout(() => {
-      setOtpLoading(false);
-      setOtpSent(true);
-      toast({
-        title: "OTP Sent",
-        description: `OTP has been sent to +91 ${formData.phoneNumber}`,
-      });
-    }, 1500);
-  };
-
-  const handleVerifyOTP = async () => {
-    if (otp.length !== 6) {
-      toast({
-        title: "Invalid OTP",
-        description: "Please enter the complete 6-digit OTP.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setOtpLoading(true);
-    
-    // Simulate OTP verification (assuming 123456 is the correct OTP for demo)
-    setTimeout(() => {
-      setOtpLoading(false);
-      if (otp === "123456") {
-        setOtpVerified(true);
-        toast({
-          title: "OTP Verified",
-          description: "Phone number verified successfully!",
-        });
-      } else {
-        toast({
-          title: "Invalid OTP",
-          description: "The OTP you entered is incorrect. Please try again.",
-          variant: "destructive",
-        });
-      }
-    }, 1000);
-  };
+  
 
   const handleSubmit = async () => {
     if (!formData.fullName || !formData.phoneNumber || !formData.gender || !formData.state) {
@@ -99,10 +42,10 @@ export default function Signup() {
       return;
     }
 
-    if (!otpVerified) {
+    if (formData.phoneNumber.length !== 10) {
       toast({
-        title: "Phone Not Verified",
-        description: "Please verify your phone number with OTP first.",
+        title: "Invalid Phone Number",
+        description: "Please enter a valid 10-digit phone number.",
         variant: "destructive",
       });
       return;
@@ -176,77 +119,9 @@ export default function Signup() {
                 value={formData.phoneNumber}
                 onChange={(e) => setFormData({...formData, phoneNumber: e.target.value.replace(/\D/g, '').slice(0, 10)})}
                 className="flex-1 rounded-l-none"
-                disabled={otpVerified}
               />
-              {!otpSent && (
-                <Button
-                  type="button"
-                  onClick={handleSendOTP}
-                  disabled={otpLoading || formData.phoneNumber.length !== 10}
-                  className="ml-2 bg-ocean-blue hover:bg-blue-700"
-                  size="sm"
-                >
-                  {otpLoading ? "Sending..." : "Send OTP"}
-                </Button>
-              )}
             </div>
           </div>
-
-          {otpSent && !otpVerified && (
-            <div className="space-y-3">
-              <Label className="text-sm font-medium text-gray-700">
-                Enter OTP sent to +91 {formData.phoneNumber}
-              </Label>
-              <div className="flex flex-col items-center space-y-3">
-                <InputOTP
-                  maxLength={6}
-                  value={otp}
-                  onChange={(value) => setOtp(value)}
-                >
-                  <InputOTPGroup>
-                    <InputOTPSlot index={0} />
-                    <InputOTPSlot index={1} />
-                    <InputOTPSlot index={2} />
-                    <InputOTPSlot index={3} />
-                    <InputOTPSlot index={4} />
-                    <InputOTPSlot index={5} />
-                  </InputOTPGroup>
-                </InputOTP>
-                <div className="flex space-x-2">
-                  <Button
-                    type="button"
-                    onClick={handleVerifyOTP}
-                    disabled={otpLoading || otp.length !== 6}
-                    className="bg-green-600 hover:bg-green-700"
-                    size="sm"
-                  >
-                    {otpLoading ? "Verifying..." : "Verify OTP"}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={handleSendOTP}
-                    disabled={otpLoading}
-                    size="sm"
-                  >
-                    Resend OTP
-                  </Button>
-                </div>
-              </div>
-              <p className="text-xs text-gray-500 text-center">
-                Use OTP: 123456 for demo purposes
-              </p>
-            </div>
-          )}
-
-          {otpVerified && (
-            <div className="flex items-center space-x-2 p-3 bg-green-50 border border-green-200 rounded-lg">
-              <Phone className="w-4 h-4 text-green-600" />
-              <span className="text-sm text-green-700 font-medium">
-                Phone number verified successfully!
-              </span>
-            </div>
-          )}
           
           <div>
             <Label htmlFor="gender" className="text-sm font-medium text-gray-700 mb-2">
@@ -284,7 +159,7 @@ export default function Signup() {
           
           <Button 
             onClick={handleSubmit}
-            disabled={loading || !otpVerified}
+            disabled={loading}
             className="w-full bg-ocean-blue hover:bg-blue-700 mt-6"
             size="lg"
           >
