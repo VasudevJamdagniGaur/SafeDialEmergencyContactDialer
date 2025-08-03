@@ -70,12 +70,12 @@ export default function Signup() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-orange-50">
-      <div className="bg-gradient-to-r from-yellow-200 to-yellow-300 text-gray-800 p-4 flex items-center">
+      <div className="bg-ocean-blue text-white p-4 flex items-center">
         <Button 
           variant="ghost" 
           size="sm" 
           onClick={() => setLocation("/splash")}
-          className="text-gray-800 hover:bg-black/10 p-2"
+          className="text-white hover:bg-white/20 p-2"
         >
           <ArrowLeft className="w-5 h-5" />
         </Button>
