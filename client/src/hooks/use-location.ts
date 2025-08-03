@@ -7,7 +7,22 @@ interface LocationData {
 }
 
 export function useLocation() {
-  const [location, setLocation] = useState<LocationData | null>(null);
+  const [location, setLocation] = useState<LocationData | null>(() => {
+    // Load last known location from localStorage
+    const saved = localStorage.getItem('lastKnownLocation');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // Check if location is less than 5 minutes old
+      if (Date.now() - parsed.timestamp < 5 * 60 * 1000) {
+        return {
+          lat: parsed.lat,
+          lng: parsed.lng,
+          address: "Current Location"
+        };
+      }
+    }
+    return null;
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,15 +40,20 @@ export function useLocation() {
       async (position) => {
         const { latitude, longitude } = position.coords;
         
-        // For demo purposes, using a mock address
-        // In production, you would use a reverse geocoding service
-        const mockAddress = "123 Main Street, City Center";
-        
-        setLocation({
+        const locationData = {
           lat: latitude,
           lng: longitude,
-          address: mockAddress
-        });
+          address: "Current Location"
+        };
+        
+        // Save location to localStorage
+        localStorage.setItem('lastKnownLocation', JSON.stringify({
+          lat: latitude,
+          lng: longitude,
+          timestamp: Date.now()
+        }));
+        
+        setLocation(locationData);
         setLoading(false);
       },
       (err) => {
@@ -49,8 +69,11 @@ export function useLocation() {
   };
 
   useEffect(() => {
-    getCurrentLocation();
-  }, []);
+    // Only get location if permission was granted and we don't have recent location
+    if (localStorage.getItem('locationPermissionGranted') === 'true' && !location) {
+      getCurrentLocation();
+    }
+  }, [location]);
 
   return { location, loading, error, getCurrentLocation };
 }

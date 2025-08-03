@@ -5,6 +5,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Splash from "@/pages/splash";
+import Signup from "@/pages/signup";
+import LocationPermission from "@/pages/location-permission";
 import Login from "@/pages/login";
 import Home from "@/pages/home";
 import EmergencyDetails from "@/pages/emergency-details";
@@ -18,6 +20,8 @@ function Router() {
     <div className="max-w-md mx-auto bg-background min-h-screen shadow-xl relative overflow-hidden">
       <Switch>
         <Route path="/splash" component={Splash} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/location-permission" component={LocationPermission} />
         <Route path="/login" component={Login} />
         <Route path="/" component={Home} />
         <Route path="/emergency-details" component={EmergencyDetails} />

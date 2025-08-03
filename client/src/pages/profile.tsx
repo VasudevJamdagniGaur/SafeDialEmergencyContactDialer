@@ -16,14 +16,29 @@ export default function Profile() {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [profile, setProfile] = useState<UserProfile>({
-    fullName: "John Doe",
-    phoneNumber: "+91 9876543210",
-    gender: "",
-    dateOfBirth: "",
-    state: "",
-    about: "",
-    specialNeed: false
+  const [profile, setProfile] = useState<UserProfile>(() => {
+    const savedProfile = localStorage.getItem('userProfile');
+    if (savedProfile) {
+      const parsed = JSON.parse(savedProfile);
+      return {
+        fullName: parsed.fullName || "",
+        phoneNumber: parsed.phoneNumber ? `+91 ${parsed.phoneNumber}` : "",
+        gender: parsed.gender || "",
+        dateOfBirth: "",
+        state: parsed.state || "",
+        about: "",
+        specialNeed: false
+      };
+    }
+    return {
+      fullName: "",
+      phoneNumber: "",
+      gender: "",
+      dateOfBirth: "",
+      state: "",
+      about: "",
+      specialNeed: false
+    };
   });
 
   const [profilePhoto, setProfilePhoto] = useState<string | null>(
@@ -91,6 +106,15 @@ export default function Profile() {
   };
 
   const updateProfile = () => {
+    // Save updated profile to localStorage
+    const profileData = {
+      fullName: profile.fullName,
+      phoneNumber: profile.phoneNumber.replace('+91 ', ''),
+      gender: profile.gender,
+      state: profile.state
+    };
+    localStorage.setItem('userProfile', JSON.stringify(profileData));
+    
     toast({
       title: "Profile Updated",
       description: "Your profile has been updated successfully.",

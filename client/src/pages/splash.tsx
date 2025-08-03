@@ -8,10 +8,10 @@ export default function Splash() {
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    // Auto-transition to login after 4 seconds
+    // Auto-transition to signup after 2 seconds
     const timer = setTimeout(() => {
-      setLocation("/login");
-    }, 4000);
+      setLocation("/signup");
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [setLocation]);
@@ -49,7 +49,7 @@ export default function Splash() {
         </Button>
         
         <Button 
-          onClick={() => setLocation("/login")}
+          onClick={() => setLocation("/signup")}
           className="w-full bg-orange-400 hover:bg-orange-500 text-white font-semibold py-3 px-6 rounded-xl shadow-md transform transition-all duration-200 hover:scale-105"
           variant="default"
         >
