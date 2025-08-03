@@ -43,7 +43,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 // Hook to use the theme context
 export const useTheme = () => useContext(ThemeContext);
 
-export default function Home() {
+export function Home() {
   const [, setLocation] = useLocation();
   const { theme, toggleTheme } = useTheme();
   const [volunteerOnline, setVolunteerOnline] = useState(false);
