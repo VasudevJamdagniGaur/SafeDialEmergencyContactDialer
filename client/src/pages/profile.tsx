@@ -26,7 +26,9 @@ export default function Profile() {
     specialNeed: false
   });
 
-  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+  const [profilePhoto, setProfilePhoto] = useState<string | null>(
+    localStorage.getItem('profilePhoto') || null
+  );
 
   const states = [
     "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
@@ -60,7 +62,9 @@ export default function Profile() {
 
       const reader = new FileReader();
       reader.onload = (e) => {
-        setProfilePhoto(e.target?.result as string);
+        const photoData = e.target?.result as string;
+        setProfilePhoto(photoData);
+        localStorage.setItem('profilePhoto', photoData);
         toast({
           title: "Photo Uploaded",
           description: "Profile photo has been updated successfully.",
@@ -76,6 +80,7 @@ export default function Profile() {
 
   const handleRemovePhoto = () => {
     setProfilePhoto(null);
+    localStorage.removeItem('profilePhoto');
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -129,36 +134,38 @@ export default function Profile() {
             className="hidden"
           />
           
-          <div className="flex justify-center gap-2">
-            <Button 
-              variant="ghost" 
-              className="ocean-blue font-medium"
-              onClick={handlePhotoClick}
-            >
-              {profilePhoto ? (
-                <>
-                  <Camera className="w-4 h-4 mr-2" />
-                  Change Photo
-                </>
-              ) : (
-                <>
-                  <Upload className="w-4 h-4 mr-2" />
-                  Upload Photo
-                </>
-              )}
-            </Button>
-            
-            {profilePhoto && (
+          {profilePhoto ? (
+            <div className="flex justify-center gap-4">
               <Button 
                 variant="ghost" 
-                className="text-red-600 hover:text-red-700 font-medium"
-                onClick={handleRemovePhoto}
+                size="sm"
+                className="text-ocean-blue hover:bg-blue-50 p-2"
+                onClick={handlePhotoClick}
+                title="Change Photo"
               >
-                <X className="w-4 h-4 mr-2" />
-                Remove
+                <Camera className="w-5 h-5" />
               </Button>
-            )}
-          </div>
+              
+              <Button 
+                variant="ghost" 
+                size="sm"
+                className="text-red-600 hover:bg-red-50 p-2"
+                onClick={handleRemovePhoto}
+                title="Delete Photo"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+          ) : (
+            <Button 
+              variant="ghost" 
+              className="text-ocean-blue font-medium"
+              onClick={handlePhotoClick}
+            >
+              <Upload className="w-4 h-4 mr-2" />
+              Upload Photo
+            </Button>
+          )}
         </div>
         
         <div className="space-y-4">
