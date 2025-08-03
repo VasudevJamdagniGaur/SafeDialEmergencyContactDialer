@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ArrowLeft, User, Camera } from "lucide-react";
+import { ArrowLeft, User, Camera, Upload, X } from "lucide-react";
 import { useLocation } from "wouter";
 import { BottomNavigation } from "@/components/bottom-navigation";
 import { useToast } from "@/hooks/use-toast";
@@ -14,6 +14,7 @@ import { UserProfile } from "@/types/emergency";
 export default function Profile() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [profile, setProfile] = useState<UserProfile>({
     fullName: "John Doe",
@@ -25,6 +26,8 @@ export default function Profile() {
     specialNeed: false
   });
 
+  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+
   const states = [
     "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
     "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand",
@@ -34,6 +37,54 @@ export default function Profile() {
     "Uttarakhand", "West Bengal"
   ];
 
+  const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        toast({
+          title: "File Too Large",
+          description: "Please select an image smaller than 5MB.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (!file.type.startsWith('image/')) {
+        toast({
+          title: "Invalid File Type",
+          description: "Please select a valid image file.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setProfilePhoto(e.target?.result as string);
+        toast({
+          title: "Photo Uploaded",
+          description: "Profile photo has been updated successfully.",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handlePhotoClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleRemovePhoto = () => {
+    setProfilePhoto(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+    toast({
+      title: "Photo Removed",
+      description: "Profile photo has been removed.",
+    });
+  };
+
   const updateProfile = () => {
     toast({
       title: "Profile Updated",
@@ -42,7 +93,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-20">
+    <div className="min-h-screen bg-background pb-20">
       <div className="bg-ocean-blue text-white p-4 flex items-center">
         <Button 
           variant="ghost" 
@@ -58,13 +109,56 @@ export default function Profile() {
       <div className="p-6 space-y-6">
         {/* Profile Photo Section */}
         <div className="text-center">
-          <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
-            <User className="w-12 h-12 text-gray-400" />
+          <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center relative overflow-hidden">
+            {profilePhoto ? (
+              <img 
+                src={profilePhoto} 
+                alt="Profile" 
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <User className="w-12 h-12 text-gray-400" />
+            )}
           </div>
-          <Button variant="ghost" className="ocean-blue font-medium">
-            <Camera className="w-4 h-4 mr-2" />
-            Change Photo
-          </Button>
+          
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handlePhotoUpload}
+            className="hidden"
+          />
+          
+          <div className="flex justify-center gap-2">
+            <Button 
+              variant="ghost" 
+              className="ocean-blue font-medium"
+              onClick={handlePhotoClick}
+            >
+              {profilePhoto ? (
+                <>
+                  <Camera className="w-4 h-4 mr-2" />
+                  Change Photo
+                </>
+              ) : (
+                <>
+                  <Upload className="w-4 h-4 mr-2" />
+                  Upload Photo
+                </>
+              )}
+            </Button>
+            
+            {profilePhoto && (
+              <Button 
+                variant="ghost" 
+                className="text-red-600 hover:text-red-700 font-medium"
+                onClick={handleRemovePhoto}
+              >
+                <X className="w-4 h-4 mr-2" />
+                Remove
+              </Button>
+            )}
+          </div>
         </div>
         
         <div className="space-y-4">
