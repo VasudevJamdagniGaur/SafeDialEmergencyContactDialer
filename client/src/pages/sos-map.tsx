@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -13,12 +13,26 @@ export default function SOSMap() {
   const { location, loading } = useGeoLocation();
   const [sosMessage, setSOSMessage] = useState("");
   const [sosActive, setSOSActive] = useState(true);
-
-  const sosData = {
-    id: "SOS-2024-001",
+  const [sosData, setSOSData] = useState({
+    id: `SOS-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
     status: "Emergency Alert Sent",
-    timestamp: new Date().toLocaleString()
-  };
+    timestamp: new Date().toLocaleString(),
+    location: null as any
+  });
+
+  // Auto-capture location and update SOS data when location is available
+  useEffect(() => {
+    if (location) {
+      setSOSData(prev => ({
+        ...prev,
+        location: {
+          lat: location.lat,
+          lng: location.lng,
+          address: location.address
+        }
+      }));
+    }
+  }, [location]);
 
   const confirmSafety = () => {
     setSOSActive(false);
@@ -89,8 +103,15 @@ export default function SOSMap() {
               <p><span className="font-medium">SOS ID:</span> {sosData.id}</p>
               <p><span className="font-medium">Status:</span> <span className="text-emergency-red font-medium">{sosData.status}</span></p>
               <p><span className="font-medium">Time:</span> {sosData.timestamp}</p>
-              {location && (
-                <p><span className="font-medium">Location:</span> {location.address}</p>
+              {sosData.location ? (
+                <>
+                  <p><span className="font-medium">Location:</span> {sosData.location.address}</p>
+                  <p><span className="font-medium">Coordinates:</span> {sosData.location.lat.toFixed(6)}, {sosData.location.lng.toFixed(6)}</p>
+                </>
+              ) : loading ? (
+                <p><span className="font-medium">Location:</span> <span className="text-orange-600">Capturing location...</span></p>
+              ) : (
+                <p><span className="font-medium">Location:</span> <span className="text-red-600">Location unavailable</span></p>
               )}
             </div>
           </CardContent>
