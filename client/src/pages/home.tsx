@@ -148,7 +148,7 @@ function Home() {
             variant="ghost" 
             size="sm" 
             onClick={() => setLocation("/profile")}
-            className="text-white hover:bg-white/20 p-2"
+            className="text-gray-800 hover:bg-black/10 p-2"
           >
             <User className="w-5 h-5" />
           </Button>
@@ -160,7 +160,7 @@ function Home() {
             variant="ghost" 
             size="sm" 
             onClick={toggleTheme}
-            className="text-white hover:bg-white/20 p-2"
+            className="text-gray-800 hover:bg-black/10 p-2"
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
           >
             {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
@@ -168,7 +168,7 @@ function Home() {
           <Button 
             variant="ghost" 
             size="sm" 
-            className="text-white hover:bg-white/20 p-2"
+            className="text-gray-800 hover:bg-black/10 p-2"
           >
             <Bell className="w-5 h-5" />
           </Button>

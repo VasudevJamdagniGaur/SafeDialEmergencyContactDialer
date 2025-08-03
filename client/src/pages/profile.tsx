@@ -114,7 +114,7 @@ export default function Profile() {
       state: profile.state
     };
     localStorage.setItem('userProfile', JSON.stringify(profileData));
-    
+
     toast({
       title: "Profile Updated",
       description: "Your profile has been updated successfully.",
@@ -123,18 +123,18 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      <div className="bg-ocean-blue text-white p-4 flex items-center">
+      <div className="bg-gradient-to-r from-yellow-200 to-yellow-300 text-gray-800 p-4 flex items-center">
         <Button 
           variant="ghost" 
           size="sm" 
           onClick={() => setLocation("/")}
-          className="text-white hover:bg-white/20 p-2"
+          className="text-gray-800 hover:bg-yellow-100 p-2"
         >
           <ArrowLeft className="w-5 h-5" />
         </Button>
         <h2 className="text-xl font-semibold ml-3">Update Profile</h2>
       </div>
-      
+
       <div className="p-6 space-y-6">
         {/* Profile Photo Section */}
         <div className="text-center">
@@ -149,7 +149,7 @@ export default function Profile() {
               <User className="w-12 h-12 text-gray-400" />
             )}
           </div>
-          
+
           <input
             ref={fileInputRef}
             type="file"
@@ -157,7 +157,7 @@ export default function Profile() {
             onChange={handlePhotoUpload}
             className="hidden"
           />
-          
+
           {profilePhoto ? (
             <div className="flex justify-center gap-4">
               <Button 
@@ -169,7 +169,7 @@ export default function Profile() {
               >
                 <Camera className="w-5 h-5" />
               </Button>
-              
+
               <Button 
                 variant="ghost" 
                 size="sm"
@@ -191,7 +191,7 @@ export default function Profile() {
             </Button>
           )}
         </div>
-        
+
         <div className="space-y-4">
           <div>
             <Label htmlFor="fullName">Full Name</Label>
@@ -202,7 +202,7 @@ export default function Profile() {
               onChange={(e) => setProfile({...profile, fullName: e.target.value})}
             />
           </div>
-          
+
           <div>
             <Label htmlFor="phoneNumber">Phone Number</Label>
             <Input
@@ -213,7 +213,7 @@ export default function Profile() {
               onChange={(e) => setProfile({...profile, phoneNumber: e.target.value})}
             />
           </div>
-          
+
           <div>
             <Label htmlFor="gender">Gender</Label>
             <Select value={profile.gender} onValueChange={(value) => setProfile({...profile, gender: value})}>
@@ -227,7 +227,7 @@ export default function Profile() {
               </SelectContent>
             </Select>
           </div>
-          
+
           <div>
             <Label htmlFor="dateOfBirth">Date of Birth</Label>
             <Input
@@ -237,7 +237,7 @@ export default function Profile() {
               onChange={(e) => setProfile({...profile, dateOfBirth: e.target.value})}
             />
           </div>
-          
+
           <div>
             <Label htmlFor="state">State</Label>
             <Select value={profile.state} onValueChange={(value) => setProfile({...profile, state: value})}>
@@ -253,7 +253,7 @@ export default function Profile() {
               </SelectContent>
             </Select>
           </div>
-          
+
           <div>
             <Label htmlFor="about">About Me</Label>
             <Textarea
@@ -265,7 +265,7 @@ export default function Profile() {
               rows={3}
             />
           </div>
-          
+
           <div className="flex items-center space-x-3">
             <Checkbox
               id="specialNeed"
@@ -276,7 +276,7 @@ export default function Profile() {
               I have special needs
             </Label>
           </div>
-          
+
           <Button 
             onClick={updateProfile}
             className="w-full bg-ocean-blue hover:bg-blue-700"

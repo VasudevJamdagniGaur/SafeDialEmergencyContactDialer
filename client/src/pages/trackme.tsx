@@ -11,7 +11,7 @@ import { TrackingSettings } from "@/types/emergency";
 
 export default function TrackMe() {
   const [, setLocation] = useLocation();
-  
+
   const [tracking, setTracking] = useState<TrackingSettings>({
     alternateNumber: "",
     mpinEnabled: false,
@@ -32,7 +32,7 @@ export default function TrackMe() {
 
   return (
     <div className="min-h-screen bg-white pb-20">
-      <div className="bg-ocean-blue text-white p-4 flex items-center">
+      <div className="bg-gradient-to-r from-yellow-200 to-yellow-300 text-gray-800 p-4 flex items-center">
         <Button 
           variant="ghost" 
           size="sm" 
@@ -43,7 +43,7 @@ export default function TrackMe() {
         </Button>
         <h2 className="text-xl font-semibold ml-3">TrackMe</h2>
       </div>
-      
+
       <div className="p-6 space-y-6">
         <div className="text-center">
           <div className="w-20 h-20 bg-light-aqua rounded-full flex items-center justify-center mx-auto mb-4">
@@ -52,7 +52,7 @@ export default function TrackMe() {
           <h3 className="text-xl font-semibold text-gray-800 mb-2">Real-time Location Tracking</h3>
           <p className="text-gray-600">Share your live location with trusted contacts for safety</p>
         </div>
-        
+
         <Card className="border-blue-200 bg-blue-50">
           <CardContent className="p-4">
             <h4 className="font-semibold text-gray-800 mb-3">Key Features</h4>
@@ -72,7 +72,7 @@ export default function TrackMe() {
             </div>
           </CardContent>
         </Card>
-        
+
         <div className="space-y-4">
           <div>
             <Label htmlFor="alternateNumber">Alternate Contact Number (Optional)</Label>
@@ -84,7 +84,7 @@ export default function TrackMe() {
               onChange={(e) => setTracking({...tracking, alternateNumber: e.target.value})}
             />
           </div>
-          
+
           <Card className="bg-gray-50">
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
@@ -100,7 +100,7 @@ export default function TrackMe() {
               </div>
             </CardContent>
           </Card>
-          
+
           <Button 
             onClick={startTracking}
             className="w-full bg-sea-green hover:bg-green-700 text-white font-bold py-4"
@@ -109,7 +109,7 @@ export default function TrackMe() {
             <Play className="w-5 h-5 mr-2" />
             Get Started
           </Button>
-          
+
           <div className="grid grid-cols-2 gap-3">
             <Button
               onClick={scheduleTracking}
@@ -119,7 +119,7 @@ export default function TrackMe() {
               <Calendar className="w-6 h-6 ocean-blue mb-2" />
               <span className="text-sm font-medium text-gray-700">Schedule</span>
             </Button>
-            
+
             <Button
               onClick={goLive}
               variant="outline"
