@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, createContext, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { EmergencyServiceCard } from "@/components/emergency-service-card";
@@ -13,11 +13,39 @@ import {
   Phone, 
   MessageCircle, 
   MapPin, 
-  AlertTriangle 
+  AlertTriangle,
+  Moon,
+  Sun
 } from "lucide-react";
+
+// Create Theme Context
+const ThemeContext = createContext({
+  theme: 'light',
+  toggleTheme: () => {},
+});
+
+// Theme Provider Component
+export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+  const [theme, setTheme] = useState('light');
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+    document.documentElement.classList.toggle('dark');
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+// Hook to use the theme context
+export const useTheme = () => useContext(ThemeContext);
 
 export default function Home() {
   const [, setLocation] = useLocation();
+  const { theme, toggleTheme } = useTheme();
   const [volunteerOnline, setVolunteerOnline] = useState(false);
 
   const emergencyServices: EmergencyService[] = [
@@ -136,20 +164,37 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white pb-20">
-      {/* App Bar */}
+      {/* Header */}
       <div className="bg-ocean-blue text-white p-4 flex items-center justify-between">
-        <h1 className="text-xl font-semibold">SafeDial</h1>
-        <div className="flex items-center space-x-2 text-sm">
-          <span>Volunteer Status:</span>
-          <div className="flex items-center space-x-2">
-            <span className="text-xs">Offline</span>
-            <Switch 
-              checked={volunteerOnline}
-              onCheckedChange={setVolunteerOnline}
-              className="data-[state=checked]:bg-sea-green"
-            />
-            <span className="text-xs">Online</span>
-          </div>
+        <div className="flex items-center space-x-3">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => setLocation("/profile")}
+            className="text-white hover:bg-white/20 p-2"
+          >
+            <User className="w-5 h-5" />
+          </Button>
+          <h1 className="text-xl font-semibold">SafeDial</h1>
+        </div>
+
+        <div className="flex items-center space-x-3">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={toggleTheme}
+            className="text-white hover:bg-white/20 p-2"
+            title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+          >
+            {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+          </Button>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="text-white hover:bg-white/20 p-2"
+          >
+            <Bell className="w-5 h-5" />
+          </Button>
         </div>
       </div>
 

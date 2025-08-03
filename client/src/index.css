@@ -3,34 +3,33 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(45, 25%, 92%);
-  --foreground: hsl(210, 40%, 13%);
-  --muted: hsl(45, 20%, 88%);
-  --muted-foreground: hsl(215, 13%, 47%);
-  --popover: hsl(45, 25%, 92%);
-  --popover-foreground: hsl(210, 40%, 13%);
-  --card: hsl(45, 25%, 92%);
-  --card-foreground: hsl(210, 40%, 13%);
+  --background: #f5f5dc; /* warm beige */
+  --foreground: hsl(222, 84%, 5%);
+  --muted: hsl(210, 40%, 94%);
+  --muted-foreground: hsl(215, 14%, 39%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(222, 84%, 5%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(222, 84%, 5%);
   --border: hsl(214, 32%, 91%);
   --input: hsl(214, 32%, 91%);
-  --primary: hsl(210, 77%, 44%);
-  --primary-foreground: hsl(0, 0%, 98%);
+  --primary: hsl(221, 83%, 53%);
+  --primary-foreground: hsl(210, 40%, 98%);
   --secondary: hsl(210, 40%, 96%);
-  --secondary-foreground: hsl(215, 25%, 27%);
+  --secondary-foreground: hsl(222, 47%, 11%);
   --accent: hsl(210, 40%, 96%);
-  --accent-foreground: hsl(215, 25%, 27%);
-  --destructive: hsl(16, 84%, 54%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(210, 77%, 44%);
-  --radius: 0.5rem;
+  --accent-foreground: hsl(222, 47%, 11%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --ring: hsl(221, 83%, 53%);
 
-  /* Ocean Breeze Theme Colors */
+  /* Custom ocean theme colors */
   --ocean-blue: hsl(210, 77%, 44%);
-  --sea-green: hsl(174, 100%, 21%);
+  --sea-green: hsl(174, 100%, 29%);
   --light-aqua: hsl(195, 91%, 64%);
-  --emergency-red: hsl(16, 84%, 54%);
-  --gradient-start: hsl(45, 30%, 94%);
-  --gradient-end: hsl(40, 25%, 90%);
+  --emergency-red: hsl(0, 84%, 60%);
+  --gradient-start: #f5f5dc; /* warm beige */
+  --gradient-end: #f0f0e6; /* slightly darker beige */
 }
 
 .dark {
@@ -50,7 +49,7 @@
   --secondary-foreground: hsl(213, 31%, 91%);
   --accent: hsl(216, 34%, 17%);
   --accent-foreground: hsl(213, 31%, 91%);
-  --destructive: hsl(16, 84%, 54%);
+  --destructive: hsl(0, 84%, 60%);
   --destructive-foreground: hsl(213, 31%, 91%);
   --ring: hsl(216, 34%, 17%);
 
