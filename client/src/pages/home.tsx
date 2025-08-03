@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { EmergencyServiceCard } from "@/components/emergency-service-card";
@@ -18,32 +18,9 @@ import {
   Sun
 } from "lucide-react";
 
-// Create Theme Context
-const ThemeContext = createContext({
-  theme: 'light',
-  toggleTheme: () => {},
-});
+import { useTheme } from "@/contexts/theme-context";
 
-// Theme Provider Component
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useState('light');
-
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-    document.documentElement.classList.toggle('dark');
-  };
-
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
-};
-
-// Hook to use the theme context
-export const useTheme = () => useContext(ThemeContext);
-
-export function Home() {
+function Home() {
   const [, setLocation] = useLocation();
   const { theme, toggleTheme } = useTheme();
   const [volunteerOnline, setVolunteerOnline] = useState(false);
@@ -239,3 +216,5 @@ export function Home() {
     </div>
   );
 }
+
+export default Home;
