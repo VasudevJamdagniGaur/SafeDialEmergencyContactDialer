@@ -33,21 +33,21 @@
 }
 
 .dark {
-  --background: #f5f5dc; /* warm beige */
+  --background: #ffffe0; /* light yellow */
   --foreground: hsl(222, 84%, 5%);
-  --muted: hsl(210, 40%, 94%);
+  --muted: #f5f5dc; /* warm beige for muted areas */
   --muted-foreground: hsl(215, 14%, 39%);
-  --popover: #f5f5dc; /* warm beige */
+  --popover: #ffffe0; /* light yellow */
   --popover-foreground: hsl(222, 84%, 5%);
-  --card: #f5f5dc; /* warm beige */
+  --card: #ffffe0; /* light yellow */
   --card-foreground: hsl(222, 84%, 5%);
   --border: hsl(214, 32%, 91%);
   --input: hsl(214, 32%, 91%);
   --primary: hsl(210, 77%, 44%);
   --primary-foreground: hsl(222, 84%, 5%);
-  --secondary: hsl(210, 40%, 96%);
+  --secondary: #f5f5dc; /* warm beige */
   --secondary-foreground: hsl(222, 47%, 11%);
-  --accent: hsl(210, 40%, 96%);
+  --accent: #f5f5dc; /* warm beige */
   --accent-foreground: hsl(222, 47%, 11%);
   --destructive: hsl(0, 84%, 60%);
   --destructive-foreground: hsl(210, 40%, 98%);
@@ -58,8 +58,8 @@
   --sea-green: hsl(174, 100%, 29%);
   --light-aqua: hsl(195, 91%, 64%);
   --emergency-red: hsl(0, 84%, 60%);
-  --gradient-start: #f5f5dc; /* warm beige */
-  --gradient-end: #f0f0e6; /* slightly darker beige */
+  --gradient-start: #ffffe0; /* light yellow */
+  --gradient-end: #fffacd; /* lemon chiffon - slightly darker yellow */
 }
 
 @layer base {
