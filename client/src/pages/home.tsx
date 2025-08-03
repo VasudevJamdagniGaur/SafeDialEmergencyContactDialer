@@ -139,14 +139,6 @@ function Home() {
       {/* Header */}
       <div className="bg-ocean-blue text-white p-4 flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => setLocation("/profile")}
-            className="text-white hover:bg-white/20 p-2"
-          >
-            <User className="w-5 h-5" />
-          </Button>
           <h1 className="text-xl font-semibold">SafeDial</h1>
         </div>
 
