@@ -33,13 +33,13 @@
 }
 
 .dark {
-  --background: hsl(224, 71%, 4%);
+  --background: #696969; /* dimgray */
   --foreground: hsl(213, 31%, 91%);
   --muted: hsl(223, 47%, 11%);
   --muted-foreground: hsl(215, 14%, 64%);
-  --popover: hsl(224, 71%, 4%);
+  --popover: #696969; /* dimgray */
   --popover-foreground: hsl(213, 31%, 91%);
-  --card: hsl(224, 71%, 4%);
+  --card: #696969; /* dimgray */
   --card-foreground: hsl(213, 31%, 91%);
   --border: hsl(216, 34%, 17%);
   --input: hsl(216, 34%, 17%);
@@ -58,8 +58,8 @@
   --sea-green: hsl(174, 100%, 21%);
   --light-aqua: hsl(195, 91%, 64%);
   --emergency-red: hsl(16, 84%, 54%);
-  --gradient-start: hsl(224, 71%, 4%);
-  --gradient-end: hsl(224, 71%, 8%);
+  --gradient-start: #696969; /* dimgray */
+  --gradient-end: #5a5a5a; /* slightly darker dimgray */
 }
 
 @layer base {
