@@ -13,16 +13,11 @@ import {
   Phone, 
   MessageCircle, 
   MapPin, 
-  AlertTriangle,
-  Moon,
-  Sun
+  AlertTriangle
 } from "lucide-react";
-
-import { useTheme } from "@/contexts/theme-context";
 
 function Home() {
   const [, setLocation] = useLocation();
-  const { theme, toggleTheme } = useTheme();
   const [volunteerOnline, setVolunteerOnline] = useState(false);
 
   const emergencyServices: EmergencyService[] = [
@@ -159,11 +154,11 @@ function Home() {
           <Button 
             variant="ghost" 
             size="sm" 
-            onClick={toggleTheme}
+            onClick={() => setLocation("/profile")}
             className="text-white hover:bg-white/20 p-2"
-            title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            title="Profile"
           >
-            {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+            <User className="w-5 h-5" />
           </Button>
           <Button 
             variant="ghost" 
